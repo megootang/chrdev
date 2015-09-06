@@ -82,13 +82,10 @@ static void __exit globalvar_exit(void) {
 }
 
 static ssize_t globalvar_read(struct file *flip, char * buf, size_t len, loff_t *off) {
-	printk(KERN_EMERG "wake up read!\n");
-	//if(down_interruptible(&sem)) {
-	//	return -ERESTARTSYS;
-	//}
-	printk(KERN_EMERG "size semaphore \n");
-
+	
+	printk(KERN_EMERG "start global read!\n");
 	if(wait_event_interruptible(wq_test,flag != 0)) {
+		printk(KERN_EMERG "current flag not equal \n");
 		return -ERESTARTSYS;
 	}
 
